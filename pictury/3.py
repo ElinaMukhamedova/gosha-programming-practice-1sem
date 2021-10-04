@@ -19,6 +19,12 @@ screen.fill((128, 102, 0))
 
 
 def window_loboy(x):
+    '''
+    Функция рисует окно (на собственной поверхности)
+    x - массив:
+        x[0] - определяет, нужно ли рисовать окно с фоном или без фона
+        x[1] - кортеж координат на исходном холсте, куда нужно вставить поверхность с окном
+    '''
     window = pygame.Surface((1000, 423))
     window.fill((85, 68, 0))
     rect(window, (213, 255, 230), (503, 100, 255, 305))
@@ -27,24 +33,31 @@ def window_loboy(x):
     rect(window, (135, 205, 222), (523, 217, 98, 164))
     rect(window, (135, 205, 222), (641, 217, 98, 164))
     if x[0] == 1:
-        screen.blit(window, x[1])
+        screen.blit(window, x[1]) #вставка поверхности на холст
     else:
-        window.set_colorkey((85, 68, 0))
-        screen.blit(window, x[1])
+        window.set_colorkey((85, 68, 0)) #удаление цвета фона
+        screen.blit(window, x[1]) #вставка поверхности на холст
 
 
 def cot_loboy(x):
+    '''
+    Функция рисует кота (на собственной поверхности)
+    x - массив:
+        x[0] - цвет кота
+        x[1] - масштаб кота (отношение размеров к размерам исходного кота)
+        x[2] - выбор направления, куда смотрит кот (лево - 'l', право - 'r')
+        x[3] - кортеж координат на исходном холсте, куда нужно вставить поверхность с котом
+        x[4] - цвет глаз кота
+    '''
     # начало кота
     cat_color = x[0]
     cat_eye_color = x[4]
     black = (0, 0, 0)
     cat = pygame.Surface((900, 900))
-    W = 900
-    H = 1000
     fon_color = (128, 102, 0)
-    cat.fill((128, 102, 0))
+    cat.fill(fon_color)
     draw_ellipse_angle(cat, cat_color, [526, 140, 280, 100], -30, 0)
-    draw_ellipse_angle(cat, (0, 0, 0), [526, 140, 280, 100], -30, 1)
+    draw_ellipse_angle(cat, black, [526, 140, 280, 100], -30, 1)
     # hvost
     ellipse(cat, cat_color, [96, 9, 524, 272], 0)
     ellipse(cat, black, [96, 9, 524, 272], 1)
@@ -89,6 +102,12 @@ def cot_loboy(x):
     # yshi
 
     def liniy(x):
+    '''
+    Функция рисует косую линию - один ус
+    x - массив:
+        x[0] - кортеж начальных координат
+        x[1] - кортеж конечных координат
+    '''
         line(cat, black, x[0], x[1])
 
     m = [(155, 186), (268, 178)]
@@ -155,6 +174,7 @@ cot_loboy([cat_color_orange, 0.15, 'r', (600, 750), cat_eye_color_green])
 cot_loboy([cat_color_orange, 0.5, 'l', (400, 500), cat_eye_color_green])
 cot_loboy([cat_color_orange, 0.15, 'l', (400, 850), cat_eye_color_green])
 cot_loboy([grey_color_cat, 0.15, 'l', (650, 920), blue_eye_color])
+
 pygame.display.update()
 clock = pygame.time.Clock()
 finished = False
